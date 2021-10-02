@@ -91,6 +91,31 @@ int main() {
 
 		b.clear();
 		std::cout << "Clear b. Size b: " << b.size() << " capacity b: " << b.capacity() << std::endl;
+
+		b.insert(b.begin(), 0);
+		b.insert(b.begin() + 1, 1);
+		b.insert(b.begin(), -1);
+		for (int i = 3; i < 10; ++i) {
+			b.insert(b.begin() + i, i);
+		}
+		std::cout << "b:";
+		for (::vector<int>::iterator it = b.begin(); it != b.end(); ++it) {
+			std::cout << " " << *it;
+		}
+		std::cout << std::endl;
+		std::cout << "Size b: " << b.size() << " capacity b: " << b.capacity() << std::endl;
+
+		b.insert(b.end(), a.rbegin(), a.rend());
+		b.insert(b.begin(), 10, -21);
+//		b.insert(b.begin(), a.rbegin(), a.rend());
+
+		std::cout << "b:";
+		for (::vector<int>::iterator it = b.begin(); it != b.end(); ++it) {
+			std::cout << " " << *it;
+		}
+		std::cout << std::endl;
+		std::cout << "Size b: " << b.size() << " capacity b: " << b.capacity() << std::endl;
+
 	}
 	std::cout << std::endl;
 
