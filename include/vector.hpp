@@ -35,10 +35,10 @@
  *  capacity				// done
  *
  *  clear					// done
- *  insert					// done?
- *  erase
- *  push_back
- *  pop_back
+ *  insert					// done
+ *  erase					// done
+ *  push_back				// done
+ *  pop_back				// done
  *  resize
  *  swap, std::swap
  *
@@ -305,31 +305,9 @@ public:
 	}
 
 	iterator insert(iterator pos, value_type const& value) {
-		size_type index = pos - begin();
-
-		if (_end == _end_cap) {
-			_grow_capacity();
-		}
-		pointer p = _start + index;
-
-		if (p < _end) {
-			_allocator.construct(_end, *(_end - 1));
-			for (pointer pm = _end - 1; pm > p; pm--) {
-				*pm = *(pm - 1);
-			}
-			*p = value;
-			++_end;
-		} else if (p == _end) {
-			_allocator.construct(_end, value);
-			++_end;
-		} else {
-			throw std::out_of_range("Invalid iterator in insert.");
-		}
-
-		return iterator(p);
+		return insert(pos, 1, value);
 	}
 
-	// TODO: fix pos == begin
 	iterator insert(iterator pos, size_type count, value_type const& value) {
 		if (count == 0) {
 			return pos;
@@ -343,13 +321,20 @@ public:
 		pointer b_end = _end;
 
 		if (p < b_end) {
-			size_type shift_len = count <= b_end - p ? count : b_end - p;
-			_construct_from_by_iter(b_end + count - shift_len, b_end - shift_len, b_end);
-			for (pointer pm = b_end - shift_len; pm < b_end; ++pm) {
-				*pm = value;
-			}
-			for (pointer pm = b_end; pm < b_end + count - shift_len; ++pm) {
-				_allocator.construct(pm, value);
+			if (p + count >= b_end) {
+				_construct_from_by_iter(p + count, p, b_end);
+				_construct_from_by_value(b_end, p + count - b_end, value);
+				for (pointer pm = p; pm < b_end; ++pm) {
+					*pm = value;
+				}
+			} else {
+				_construct_from_by_iter(b_end, b_end - count, b_end);
+				for (pointer pm = b_end - 1; pm >= p + count; --pm) {
+					*pm = *(pm - count);
+				}
+				for (pointer pm = p; pm < p + count; ++pm) {
+					*pm = value;
+				}
 			}
 			_end = b_end + count;
 		} else if (p == _end) {
@@ -375,28 +360,70 @@ public:
 			_grow_capacity();
 		}
 		pointer p = _start + index;
-		pointer b_end = _end;
 
-		if (p < b_end) {
-			Iter cur_iter = first;
-			size_type shift_len = count <= b_end - p ? count : b_end - p;
-
-			_construct_from_by_iter(b_end + count - shift_len, b_end - shift_len, b_end);
-			for (pointer pm = b_end - shift_len; pm < b_end; ++pm, ++cur_iter) {
-				*pm = *cur_iter;
-			}
-			for (pointer pm = b_end; pm < b_end + count - shift_len; ++pm, ++cur_iter) {
-				_allocator.construct(pm, *cur_iter);
-			}
-			_end = b_end + count;
-		} else if (p == _end) {
-			_construct_from_by_iter(_end, first, last);
-		} else {
-			throw std::out_of_range("Invalid iterator in insert.");
+		for (Iter it = last - 1; it != first - 1; --it) {
+			insert(iterator(p), *it);
 		}
 
 		return iterator(p);
 	}
+
+
+	iterator erase(iterator pos) {
+		if (pos >= end()) {
+			throw std::out_of_range("Invalid iterator in erase.");
+		}
+//		for (iterator it = pos; it < end() - 1; ++it) {
+//			*it = *(it + 1);
+//		}
+//		_allocator.destroy(_end - 1);
+//		--_end;
+//		return pos;
+		return erase(pos, pos + 1);
+	}
+
+	iterator erase(iterator first, iterator last) {
+		if (last > end() || first < begin()) {
+			throw std::out_of_range("Invalid iterator in erase.");
+		}
+		if (first == last) {
+			return last;
+		}
+
+		size_type count = last - first;
+		for (iterator it = first; it < end() - count; ++it) {
+			*it = *(it + count);
+		}
+
+		for (size_type i = 0; i < count; ++i) {
+			_allocator.destroy(_end - 1);
+			--_end;
+		}
+		return first;
+	}
+
+
+	void push_back(value_type const& value) {
+		insert(end(), value);
+	}
+
+	void pop_back() {
+		erase(end() - 1);
+	}
+
+	void resize(size_type new_size) {
+		value_type dflt = value_type();
+		resize(new_size, dflt);
+	}
+
+	void resize(size_type new_size, value_type const& value) {
+		if (new_size == size()) {
+			return;
+		} else if (new_size < size()) {
+
+		}
+	}
+
 
 
 	void swap(vector_type& other) {
@@ -473,6 +500,22 @@ protected:
 			throw;
 		}
 	}
+
+//	template <typename Iter>
+//	void _r_construct_from_by_iter(pointer from, Iter first, Iter last) {
+//		pointer cur_ptr = from + (last - first);
+//		try {
+//			for (Iter cur_iter = last - 1; cur_iter != first - 1; --cur_iter, --cur_ptr) {
+//				_allocator.construct(cur_ptr, *cur_iter);
+//				++_end;
+//			}
+//		} catch (...) {
+//			for (pointer p = from + (last - first); p != cur_ptr; --p) {
+//				_allocator.destroy(p);
+//			}
+//			throw;
+//		}
+//	}
 
 
 	void _construct_from_start_by_value(size_type n, value_type const& value) {
