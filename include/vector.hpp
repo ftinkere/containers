@@ -9,45 +9,48 @@
 #include <algorithm>
 
 #include "iterator.hpp"
+#include "cmp.hpp"
 
 /**
  * https://en.cppreference.com/w/cpp/container/vector
  *  TODO:
  *
- *  constructor				// done
- *  destructor				// done
- *  assign					// done
- *  operator=				// done
- *  get_allocator			// done
+ *  constructor					// done
+ *  destructor					// done
+ *  assign						// done
+ *  operator=					// done
+ *  get_allocator				// done
  *
- *  at						// done
- *  operator[]				// done
- *  front					// done
- *  back					// done
- *  data					// done
+ *  at							// done
+ *  operator[]					// done
+ *  front						// done
+ *  back						// done
+ *  data						// done
  *
- *  iterators: begin, end	// done
+ *  iterators: begin, end		// done
  *
- *  empty					// done
- *  size					// done
- *  max_size				// done
- *  reserve					// done
- *  capacity				// done
+ *  empty						// done
+ *  size						// done
+ *  max_size					// done
+ *  reserve						// done
+ *  capacity					// done
  *
- *  clear					// done
- *  insert					// done
- *  erase					// done
- *  push_back				// done
- *  pop_back				// done
- *  resize
- *  swap, std::swap
+ *  clear						// done
+ *  insert						// done
+ *  erase						// done
+ *  push_back					// done
+ *  pop_back					// done
+ *  resize						// done
+ *  swap, std::swap				// done
  *
- *  operator==
- *  operator!=
- *  operator<
- *  operator<=
- *  operator>
- *  operator>=
+ * std::equal					// done
+ * std::lexicographical_compare	// done
+ *  operator==					// done
+ *  operator!=					// done
+ *  operator<					// done
+ *  operator<=					// done
+ *  operator>					// done
+ *  operator>=					// done
  *
  */
 
@@ -412,16 +415,19 @@ public:
 	}
 
 	void resize(size_type new_size) {
-		value_type dflt = value_type();
-		resize(new_size, dflt);
+		resize(new_size, value_type());
 	}
 
 	void resize(size_type new_size, value_type const& value) {
-		if (new_size == size()) {
+		if (new_size == size()) { return; }
+		if (new_size < size()) {
+			erase(begin() + new_size, end());
 			return;
-		} else if (new_size < size()) {
-
 		}
+		while (_end_cap - _start < new_size) {
+			_grow_capacity();
+		}
+		_construct_from_by_value(_end, new_size - size(), value);
 	}
 
 
@@ -549,6 +555,49 @@ protected:
 	}
 
 };
+
+namespace std {
+	template<typename T, typename Allocator>
+	void swap(::vector<T, Allocator> &x, ::vector<T, Allocator> &y) {
+		x.swap(y);
+	}
+}
+
+template<typename T, typename Allocator>
+bool operator== (::vector<T, Allocator> const& lhs,
+				 ::vector<T, Allocator> const& rhs) {
+	return equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
+
+template<typename T, typename Allocator>
+bool operator!= (::vector<T, Allocator> const& lhs,
+				 ::vector<T, Allocator> const& rhs) {
+	return equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::not_equal_to<T>());
+}
+
+template<typename T, typename Allocator>
+bool operator< (::vector<T, Allocator> const& lhs,
+				 ::vector<T, Allocator> const& rhs) {
+	return ::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::less<T>());
+}
+
+template<typename T, typename Allocator>
+bool operator<= (::vector<T, Allocator> const& lhs,
+				 ::vector<T, Allocator> const& rhs) {
+	return ::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::less<T>()) || lhs == rhs;
+}
+
+template<typename T, typename Allocator>
+bool operator> (::vector<T, Allocator> const& lhs,
+				 ::vector<T, Allocator> const& rhs) {
+	return ::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::greater<T>());
+}
+
+template<typename T, typename Allocator>
+bool operator>= (::vector<T, Allocator> const& lhs,
+				 ::vector<T, Allocator> const& rhs) {
+	return ::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::greater<T>()) || lhs == rhs;
+}
 
 
 #endif //CONTAINERS_VECTOR_HPP

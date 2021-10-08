@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <iomanip>
 
 #include "vector.hpp"
 
@@ -272,6 +273,189 @@ int main() {
 			std::cout << *it << " ";
 		}
 		std::cout << std::endl;
+
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "Resize to 5"
+				  << green_arrow_left
+				  << std::endl;
+		stdvec.resize(5);
+		ftvec.resize(5);
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "std vec"
+				  << green_arrow_left
+				  << std::endl;
+		for (std::vector<int>::iterator it = stdvec.begin(); it != stdvec.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "ft vec"
+				  << green_arrow_left
+				  << std::endl;
+		for (::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
+
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "Resize to 8 with default"
+				  << green_arrow_left
+				  << std::endl;
+		stdvec.resize(8);
+		ftvec.resize(8);
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "std vec"
+				  << green_arrow_left
+				  << std::endl;
+		for (std::vector<int>::iterator it = stdvec.begin(); it != stdvec.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "ft vec"
+				  << green_arrow_left
+				  << std::endl;
+		for (::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
+
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "Resize to 10 with 21"
+				  << green_arrow_left
+				  << std::endl;
+		stdvec.resize(10, 21);
+		stdvec.resize(10, 21);
+		ftvec.resize(10, 21);
+		ftvec.resize(10, 21);
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "std vec"
+				  << green_arrow_left
+				  << std::endl;
+		for (std::vector<int>::iterator it = stdvec.begin(); it != stdvec.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "ft vec"
+				  << green_arrow_left
+				  << std::endl;
+		for (::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
+
+		std::vector<int> stdtmp;
+		stdtmp.push_back(42);
+		std::swap(stdtmp, stdvec);
+
+		::vector<int> fttmp;
+		fttmp.push_back(42);
+		std::swap(fttmp, ftvec);
+
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "std vec"
+				  << green_arrow_left
+				  << std::endl;
+		for (std::vector<int>::iterator it = stdvec.begin(); it != stdvec.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "ft vec"
+				  << green_arrow_left
+				  << std::endl;
+		for (::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
+
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "Equal"
+				  << green_arrow_left
+				  << std::endl;
+		std::cout << std::boolalpha << ::equal(stdvec.begin(), stdvec.end(), ftvec.begin()) << ", other way: ";
+		std::cout << std::boolalpha << ::equal(stdvec.begin(), stdvec.end(), ftvec.begin(), ftvec.end()) << std::endl;
+		std::cout << "after push 0 to ft: ";
+		ftvec.push_back(0);
+		std::cout << std::boolalpha << ::equal(stdvec.begin(), stdvec.end(), ftvec.begin(), ftvec.end()) << std::endl;
+		std::cout << std::endl;
+
+		std::swap(stdtmp, stdvec);
+		std::swap(fttmp, ftvec);
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "std vec"
+				  << green_arrow_left
+				  << std::endl;
+		for (std::vector<int>::iterator it = stdvec.begin(); it != stdvec.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "ft vec"
+				  << green_arrow_left
+				  << std::endl;
+		for (::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
+
+		::vector<int> cpvec(stdvec.begin(), stdvec.end());
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "Lexicographical compare"
+				  << green_arrow_left
+				  << std::endl;
+		std::cout << "cpvec < ftvec: " << std::boolalpha << (cpvec < ftvec) << std::endl;
+		std::cout << "cpvec <= ftvec: " << std::boolalpha << (cpvec <= ftvec) << std::endl;
+		std::cout << "cpvec > ftvec: " << std::boolalpha << (cpvec > ftvec) << std::endl;
+		std::cout << "cpvec >= ftvec: " << std::boolalpha << (cpvec >= ftvec) << std::endl;
+
+		cpvec.push_back(0);
+		ftvec.push_back(1);
+
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "cp  vec"
+				  << green_arrow_left
+				  << std::endl;
+		for (::vector<int>::iterator it = cpvec.begin(); it != cpvec.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "ft vec"
+				  << green_arrow_left
+				  << std::endl;
+		for (::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
+
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "Lexicographical compare"
+				  << green_arrow_left
+				  << std::endl;
+		std::cout << "cpvec < ftvec: " << std::boolalpha << (cpvec < ftvec) << std::endl;
+		std::cout << "cpvec <= ftvec: " << std::boolalpha << (cpvec <= ftvec) << std::endl;
+		std::cout << "cpvec > ftvec: " << std::boolalpha << (cpvec > ftvec) << std::endl;
+		std::cout << "cpvec >= ftvec: " << std::boolalpha << (cpvec >= ftvec) << std::endl;
 
 	}
 	std::cout << std::endl;
