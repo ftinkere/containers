@@ -142,7 +142,7 @@ int main() {
 
 	{
 		std::vector<int>	stdvec;
-		::vector<int>		ftvec;
+		ft::vector<int>		ftvec;
 
 		stdvec.reserve(10);
 		ftvec.reserve(10);
@@ -154,7 +154,7 @@ int main() {
 				  << std::endl;
 		for (int i = 0; i < 10; ++i) {
 			std::vector<int>::iterator stdit = stdvec.insert(stdvec.end(), i);
-			::vector<int>::iterator ftit = ftvec.insert(ftvec.end(), i);
+			ft::vector<int>::iterator ftit = ftvec.insert(ftvec.end(), i);
 
 			std::cout << "std base: " << stdit.base()
 					  << " std val: " << *stdit
@@ -179,7 +179,7 @@ int main() {
 				  << "ft vec"
 				  << green_arrow_left
 				  << std::endl;
-		for (::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
+		for (ft::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
 			std::cout << *it << " ";
 		}
 		std::cout << std::endl;
@@ -192,7 +192,7 @@ int main() {
 				  << std::endl;
 		for (int i = 0; i < 5; ++i) {
 			std::vector<int>::iterator stdit = stdvec.erase(stdvec.begin(), stdvec.begin() + 2);
-			::vector<int>::iterator ftit = ftvec.erase(ftvec.begin(), ftvec.begin() + 2);
+			ft::vector<int>::iterator ftit = ftvec.erase(ftvec.begin(), ftvec.begin() + 2);
 
 			if (stdit != stdvec.end()) {
 				std::cout << "std base: " << stdit.base()
@@ -230,7 +230,7 @@ int main() {
 				  << "ft vec"
 				  << green_arrow_left
 				  << std::endl;
-		for (::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
+		for (ft::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
 			std::cout << *it << " ";
 		}
 		std::cout << std::endl;
@@ -269,7 +269,7 @@ int main() {
 				  << "ft vec"
 				  << green_arrow_left
 				  << std::endl;
-		for (::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
+		for (ft::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
 			std::cout << *it << " ";
 		}
 		std::cout << std::endl;
@@ -295,7 +295,7 @@ int main() {
 				  << "ft vec"
 				  << green_arrow_left
 				  << std::endl;
-		for (::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
+		for (ft::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
 			std::cout << *it << " ";
 		}
 		std::cout << std::endl;
@@ -321,7 +321,7 @@ int main() {
 				  << "ft vec"
 				  << green_arrow_left
 				  << std::endl;
-		for (::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
+		for (ft::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
 			std::cout << *it << " ";
 		}
 		std::cout << std::endl;
@@ -349,7 +349,7 @@ int main() {
 				  << "ft vec"
 				  << green_arrow_left
 				  << std::endl;
-		for (::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
+		for (ft::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
 			std::cout << *it << " ";
 		}
 		std::cout << std::endl;
@@ -358,7 +358,7 @@ int main() {
 		stdtmp.push_back(42);
 		std::swap(stdtmp, stdvec);
 
-		::vector<int> fttmp;
+		ft::vector<int> fttmp;
 		fttmp.push_back(42);
 		std::swap(fttmp, ftvec);
 
@@ -376,7 +376,7 @@ int main() {
 				  << "ft vec"
 				  << green_arrow_left
 				  << std::endl;
-		for (::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
+		for (ft::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
 			std::cout << *it << " ";
 		}
 		std::cout << std::endl;
@@ -409,12 +409,12 @@ int main() {
 				  << "ft vec"
 				  << green_arrow_left
 				  << std::endl;
-		for (::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
+		for (ft::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
 			std::cout << *it << " ";
 		}
 		std::cout << std::endl;
 
-		::vector<int> cpvec(stdvec.begin(), stdvec.end());
+		ft::vector<int> cpvec(stdvec.begin(), stdvec.end());
 		std::cout << "\t"
 				  << green_arrow_right
 				  << "Lexicographical compare"
@@ -433,7 +433,7 @@ int main() {
 				  << "cp  vec"
 				  << green_arrow_left
 				  << std::endl;
-		for (::vector<int>::iterator it = cpvec.begin(); it != cpvec.end(); ++it) {
+		for (ft::vector<int>::iterator it = cpvec.begin(); it != cpvec.end(); ++it) {
 			std::cout << *it << " ";
 		}
 		std::cout << std::endl;
@@ -442,7 +442,7 @@ int main() {
 				  << "ft vec"
 				  << green_arrow_left
 				  << std::endl;
-		for (::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
+		for (ft::vector<int>::iterator it = ftvec.begin(); it != ftvec.end(); ++it) {
 			std::cout << *it << " ";
 		}
 		std::cout << std::endl;
