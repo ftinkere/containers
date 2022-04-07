@@ -75,10 +75,10 @@ namespace ft {
 
 		typedef vector<value_type, allocator_type>			vector_type;
 
-		typedef base_iterator<value_type, false>			iterator;
-		typedef base_iterator<value_type, true>				const_iterator;
-		typedef reverse_base_iterator<value_type, false>	reverse_iterator;
-		typedef reverse_base_iterator<value_type, true>		const_reverse_iterator;
+		typedef base_iterator<value_type>					iterator;
+		typedef base_iterator<const value_type>				const_iterator;
+//		typedef reverse_base_iterator<value_type, false>	reverse_iterator;
+//		typedef reverse_base_iterator<value_type, true>		const_reverse_iterator;
 	protected:
 		allocator_type _allocator;
 		pointer _start;
@@ -135,6 +135,7 @@ namespace ft {
 			_construct_from_start_by_iter(other.begin(), other.end());
 		}
 
+
 		virtual ~vector() {
 			for (pointer p = _start; p != _end; ++p) {
 				_allocator.destroy(p);
@@ -154,7 +155,7 @@ namespace ft {
 			_construct_from_start_by_value(count, value);
 		}
 
-		// TODO: optimize for new_size < cap
+		//TODO: optimize for new_size < cap
 		template<class Iter>
 		void assign(Iter first,
 					typename enable_if<!is_integral<Iter>::value, Iter>::type last) {
@@ -164,7 +165,7 @@ namespace ft {
 			_construct_from_start_by_iter(first, last);
 		}
 
-		vector_type &operator=(vector_type const &other) {
+		vector& operator=(vector_type const &other) {
 			this->assign(other.begin(), other.end());
 			return *this;
 		}
@@ -244,29 +245,30 @@ namespace ft {
 			return const_iterator(_end);
 		}
 
-		reverse_iterator rbegin() {
-			return reverse_iterator(_end - 1);
-		}
+//		reverse_iterator rbegin() {
+//			return reverse_iterator(_end - 1);
+//		}
+//
+//		reverse_iterator rend() {
+//			return reverse_iterator(_start - 1);
+//		}
+//
+//		const_reverse_iterator rbegin() const {
+//			return const_reverse_iterator(_end - 1);
+//		}
+//
+//		const_reverse_iterator rend() const {
+//			return const_reverse_iterator(_start - 1);
+//		}
+//
+//		const_reverse_iterator crbegin() const {
+//			return const_reverse_iterator(_end - 1);
+//		}
+//
+//		const_reverse_iterator crend() const {
+//			return const_reverse_iterator(_start - 1);
+//		}
 
-		reverse_iterator rend() {
-			return reverse_iterator(_start - 1);
-		}
-
-		const_reverse_iterator rbegin() const {
-			return const_reverse_iterator(_end - 1);
-		}
-
-		const_reverse_iterator rend() const {
-			return const_reverse_iterator(_start - 1);
-		}
-
-		const_reverse_iterator crbegin() const {
-			return const_reverse_iterator(_end - 1);
-		}
-
-		const_reverse_iterator crend() const {
-			return const_reverse_iterator(_start - 1);
-		}
 
 
 		bool empty() const {
@@ -577,25 +579,37 @@ namespace ft {
 	template<typename T, typename Allocator>
 	bool operator<(ft::vector<T, Allocator> const &lhs,
 				   ft::vector<T, Allocator> const &rhs) {
-		return ::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::less<T>());
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::less<T>());
 	}
 
 	template<typename T, typename Allocator>
 	bool operator<=(ft::vector<T, Allocator> const &lhs,
 					ft::vector<T, Allocator> const &rhs) {
-		return ::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::less_equal<T>()) || lhs == rhs;
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::less_equal<T>());
 	}
 
 	template<typename T, typename Allocator>
 	bool operator>(ft::vector<T, Allocator> const &lhs,
 				   ft::vector<T, Allocator> const &rhs) {
-		return ::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::greater<T>());
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::greater<T>());
 	}
+
+
+
+
+
+
+
+
+
+
+
+
 
 	template<typename T, typename Allocator>
 	bool operator>=(ft::vector<T, Allocator> const &lhs,
 					ft::vector<T, Allocator> const &rhs) {
-		return ::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::greater_equal<T>()) || lhs == rhs;
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::greater_equal<T>());
 	}
 
 }

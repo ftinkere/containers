@@ -4,6 +4,6 @@ project(containers)
 set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_COMPILER clang++)
 
-include_directories(include)
+include_directories(include /usr/include)
 
 add_executable(containers srcs/main.cpp include/vector.hpp include/iterator.hpp include/cmp.hpp)

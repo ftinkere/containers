@@ -139,7 +139,7 @@ int main() {
 //
 //	}
 //	std::cout << std::endl;
-
+//
 	{
 		std::vector<int>	stdvec;
 		ft::vector<int>		ftvec;
@@ -386,11 +386,11 @@ int main() {
 				  << "Equal"
 				  << green_arrow_left
 				  << std::endl;
-		std::cout << std::boolalpha << ::equal(stdvec.begin(), stdvec.end(), ftvec.begin()) << ", other way: ";
-		std::cout << std::boolalpha << ::equal(stdvec.begin(), stdvec.end(), ftvec.begin(), ftvec.end()) << std::endl;
+		std::cout << std::boolalpha << ft::equal(stdvec.begin(), stdvec.end(), ftvec.begin()) << ", other way: ";
+		std::cout << std::boolalpha << ft::equal(stdvec.begin(), stdvec.end(), ftvec.begin(), ftvec.end()) << std::endl;
 		std::cout << "after push 0 to ft: ";
 		ftvec.push_back(0);
-		std::cout << std::boolalpha << ::equal(stdvec.begin(), stdvec.end(), ftvec.begin(), ftvec.end()) << std::endl;
+		std::cout << std::boolalpha << ft::equal(stdvec.begin(), stdvec.end(), ftvec.begin(), ftvec.end()) << std::endl;
 		std::cout << std::endl;
 
 		std::swap(stdtmp, stdvec);
@@ -424,7 +424,13 @@ int main() {
 		std::cout << "cpvec <= ftvec: " << std::boolalpha << (cpvec <= ftvec) << std::endl;
 		std::cout << "cpvec > ftvec: " << std::boolalpha << (cpvec > ftvec) << std::endl;
 		std::cout << "cpvec >= ftvec: " << std::boolalpha << (cpvec >= ftvec) << std::endl;
-
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "Equal"
+				  << green_arrow_left
+				  << std::endl;
+		std::cout << std::boolalpha << ft::equal(stdvec.begin(), stdvec.end(), ftvec.begin()) << ", other way: ";
+		std::cout << std::boolalpha << ft::equal(stdvec.begin(), stdvec.end(), ftvec.begin(), ftvec.end()) << std::endl;
 		cpvec.push_back(0);
 		ftvec.push_back(1);
 
@@ -456,7 +462,13 @@ int main() {
 		std::cout << "cpvec <= ftvec: " << std::boolalpha << (cpvec <= ftvec) << std::endl;
 		std::cout << "cpvec > ftvec: " << std::boolalpha << (cpvec > ftvec) << std::endl;
 		std::cout << "cpvec >= ftvec: " << std::boolalpha << (cpvec >= ftvec) << std::endl;
-
+		std::cout << "\t"
+				  << green_arrow_right
+				  << "Equal"
+				  << green_arrow_left
+				  << std::endl;
+		std::cout << std::boolalpha << ft::equal(stdvec.begin(), stdvec.end(), ftvec.begin()) << ", other way: ";
+		std::cout << std::boolalpha << ft::equal(stdvec.begin(), stdvec.end(), ftvec.begin(), ftvec.end()) << std::endl;
 	}
 	std::cout << std::endl;
 
