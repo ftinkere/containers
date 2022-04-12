@@ -77,8 +77,8 @@ namespace ft {
 
 		typedef base_iterator<value_type>					iterator;
 		typedef base_iterator<const value_type>				const_iterator;
-//		typedef reverse_base_iterator<value_type, false>	reverse_iterator;
-//		typedef reverse_base_iterator<value_type, true>		const_reverse_iterator;
+		typedef reverse_base_iterator<value_type>			reverse_iterator;
+		typedef reverse_base_iterator<const value_type>		const_reverse_iterator;
 	protected:
 		allocator_type _allocator;
 		pointer _start;
@@ -245,29 +245,29 @@ namespace ft {
 			return const_iterator(_end);
 		}
 
-//		reverse_iterator rbegin() {
-//			return reverse_iterator(_end - 1);
-//		}
-//
-//		reverse_iterator rend() {
-//			return reverse_iterator(_start - 1);
-//		}
-//
-//		const_reverse_iterator rbegin() const {
-//			return const_reverse_iterator(_end - 1);
-//		}
-//
-//		const_reverse_iterator rend() const {
-//			return const_reverse_iterator(_start - 1);
-//		}
-//
-//		const_reverse_iterator crbegin() const {
-//			return const_reverse_iterator(_end - 1);
-//		}
-//
-//		const_reverse_iterator crend() const {
-//			return const_reverse_iterator(_start - 1);
-//		}
+		reverse_iterator rbegin() {
+			return reverse_iterator(end());
+		}
+
+		reverse_iterator rend() {
+			return reverse_iterator(begin());
+		}
+
+		const_reverse_iterator rbegin() const {
+			return const_reverse_iterator(cend());
+		}
+
+		const_reverse_iterator rend() const {
+			return const_reverse_iterator(cbegin());
+		}
+
+		const_reverse_iterator crbegin() const {
+			return const_reverse_iterator(cend());
+		}
+
+		const_reverse_iterator crend() const {
+			return const_reverse_iterator(cbegin());
+		}
 
 
 
@@ -557,59 +557,45 @@ namespace ft {
 
 	};
 
-//	namespace std {
-		template<typename T, typename Allocator>
-		void swap(ft::vector<T, Allocator> &x, ft::vector<T, Allocator> &y) {
-			x.swap(y);
-		}
-//	}
+	template<typename T, typename Allocator>
+	void swap(ft::vector<T, Allocator> &x, ft::vector<T, Allocator> &y) {
+		x.swap(y);
+	}
 
 	template<typename T, typename Allocator>
 	bool operator==(ft::vector<T, Allocator> const &lhs,
 					ft::vector<T, Allocator> const &rhs) {
-		return equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+		return ft::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 	}
 
 	template<typename T, typename Allocator>
 	bool operator!=(ft::vector<T, Allocator> const &lhs,
 					ft::vector<T, Allocator> const &rhs) {
-		return equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::not_equal_to<T>());
+		return !ft::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 	}
 
 	template<typename T, typename Allocator>
 	bool operator<(ft::vector<T, Allocator> const &lhs,
 				   ft::vector<T, Allocator> const &rhs) {
-		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::less<T>());
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 	}
 
 	template<typename T, typename Allocator>
 	bool operator<=(ft::vector<T, Allocator> const &lhs,
 					ft::vector<T, Allocator> const &rhs) {
-		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::less_equal<T>());
+		return lhs < rhs || lhs == rhs;
 	}
 
 	template<typename T, typename Allocator>
 	bool operator>(ft::vector<T, Allocator> const &lhs,
 				   ft::vector<T, Allocator> const &rhs) {
-		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::greater<T>());
+		return !(lhs <= rhs);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
 
 	template<typename T, typename Allocator>
 	bool operator>=(ft::vector<T, Allocator> const &lhs,
 					ft::vector<T, Allocator> const &rhs) {
-		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::greater_equal<T>());
+		return !(lhs < rhs);
 	}
 
 }

@@ -6,4 +6,4 @@ set(CMAKE_CXX_COMPILER clang++)
 
 include_directories(include /usr/include)
 
-add_executable(containers srcs/main.cpp include/vector.hpp include/iterator.hpp include/cmp.hpp)
+add_executable(containers srcs/main.cpp include/vector.hpp include/iterator.hpp include/cmp.hpp include/pair.hpp)

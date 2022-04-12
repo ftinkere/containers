@@ -10,7 +10,7 @@ template<typename Iter1, typename Iter2>
 bool equal(Iter1 first1, Iter1 last1,
 		   Iter2 first2) {
 	for (; first1 != last1; ++first1, ++first2) {
-		if (!(*first1 == *first2)) {
+		if (*first1 != *first2) {
 			return false;
 		}
 	}
@@ -46,7 +46,7 @@ template<typename Iter1, typename Iter2, typename BinaryPredicate>
 bool equal(Iter1 first1, Iter1 last1,
 		   Iter2 first2, Iter2 last2,
 		   BinaryPredicate p) {
-	if (last1 - first1 != last2 - first2) {
+	if ((last1 - first1) != (last2 - first2)) {
 		return false;
 	}
 	for (; first1 != last1 && first2 != last2; ++first1, ++first2) {
@@ -76,7 +76,7 @@ bool lexicographical_compare(Iter1 first1, Iter1 last1,
 		if (comp(*first1, *first2)) { return true; }
 		if (comp(*first2, *first1)) { return false; }
 	}
-	return (first1 == last1) && (first2 != last2);
+	return (first1 == last1) && (first2 != last2) ;
 }
 
 }
